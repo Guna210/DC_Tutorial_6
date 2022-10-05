@@ -1,0 +1,156 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div id="customerForm">
+    <form>
+        <input type="text" id="Cfirstname" name="Cfirstname" placeholder="First Name"/>
+        <input type="text" id="Clastname" name="Clastname" placeholder="Last Name"/>
+        <input type="text" id="CacctNo" name="CacctNo" placeholder="Account Number"/>
+        <input type="text" id="Cpin" name="Cpin" placeholder="PIN"/>
+        <input type="text" id="Cbalance" name="Cbalance" placeholder="Balance"/>
+        <input type="text" id="Cindex" name="Cindex" placeholder="Index"/>
+    </form>
+    <button id="Go" onclick="go()">Go</button>
+    <button id="Insert" onclick="insert()">Insert</button>
+    <button id="Delete" onclick="delete()">Delete</button>
+    <button id="Update" onclick="update()">Update</button>
+</div>
+<script>
+    function go()
+    {
+        $.ajax({
+            url: '/customer/go/'+ $('#Cindex').val(),
+            type: 'get',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) 
+            {
+                var obj = JSON.parse(data);
+                $("#Cfirstname").val(data);
+                $("#Clastname").val(obj.lastname);
+                $("#CacctNo").val(obj.acctNo);
+                $("#Cpin").val(obj.pin);
+                $("#Cbalance").val(obj.balance);
+            },
+            error: function (jqXhr, textStatus, errorThrown) 
+            {
+                console.log(errorThrown);
+            } 
+        });
+    }
+    function insert() 
+    { 
+        $.ajax({
+            type: 'POST',
+            url: '/customer/insert/',
+            contentType: 'application/json',
+            data: JSON.stringify(
+            {
+                "index": $('#Cindex').val(),
+                "balance": $("#Cbalance").val(),
+                "pin": $("#Cpin").val(),
+                "acctNo": $("#CacctNo").val(),
+                "lastname": $("#Clastname").val(),
+                "firstname": $("#Cfirstname").val()
+            }),
+            success: function(data, textStatus, jQxhr)
+            {
+                alert("Data Inserted");
+            },
+            error: function(xhr, textStatus, error)
+            {
+                alert("Error");
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            }
+        });
+    }
+    function delete()
+    {
+        $.ajax({
+            url: '/customer/delete/'+ $('#Cindex').val(),
+            type: 'DELETE',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) 
+            {
+                alert("Data Deleted");
+            },
+            error: function (jqXhr, textStatus, errorThrown) 
+            {
+                console.log(errorThrown);
+            } 
+        });
+    }
+    function update() 
+    { 
+        $.ajax({
+            type: 'PUT',
+            url: '/customer/update/'+ $('#Cindex').val(),
+            contentType: 'application/json',
+            data: JSON.stringify(
+            {
+                "index": $('#Cindex').val(),
+                "balance": $("#Cbalance").val(),
+                "pin": $("#Cpin").val(),
+                "acctNo": $("#CacctNo").val(),
+                "lastname": $("#Clastname").val(),
+                "firstname": $("#Cfirstname").val()
+            }),
+            success: function(data, textStatus, jQxhr)
+            {
+                alert("Data Updated");
+            },
+            error: function(xhr, textStatus, error)
+            {
+                alert("Error");
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            }
+        });
+    }
+    function search() 
+    { 
+        $.ajax({
+            type: 'GET',
+            url: '/customer/search/',
+            contentType: 'application/json',
+            data: JSON.stringify(
+            {
+                "lastname": $("#Clastname").val()
+            }),
+            success: function(data, textStatus, jQxhr)
+            {
+                alert("Data Updated");
+            },
+            error: function(xhr, textStatus, error)
+            {
+                alert("Error");
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            }
+        });
+    }
+    function generate()
+    {
+        $.ajax({
+            url: '/customer/generate',
+            type: 'GET',
+            contentType: 'application/json',
+            processData: false,
+            success: function (data, textStatus, jQxhr) 
+            {
+                alert("Data Generated");
+            },
+            error: function (jqXhr, textStatus, errorThrown) 
+            {
+                console.log(errorThrown);
+            } 
+        });
+    }
+</script>
