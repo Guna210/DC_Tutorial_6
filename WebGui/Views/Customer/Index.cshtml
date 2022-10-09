@@ -12,7 +12,7 @@
         <input type="text" id="Cbalance" name="Cbalance" placeholder="Balance"/>
         <input type="text" id="Cindex" name="Cindex" placeholder="Index"/>
     </form>
-    <button id="Go" onclick="go()">Go</button>
+    <button id="Go" onclick="go">Go</button>
     <button id="Insert" onclick="insert()">Insert</button>
     <button id="Delete" onclick="delete()">Delete</button>
     <button id="Update" onclick="update()">Update</button>
@@ -20,7 +20,8 @@
 <script>
     function go()
     {
-        $.ajax({
+        window.alert("Hello\nHow are you?");
+        /*$.ajax({
             url: '/customer/go/'+ $('#Cindex').val(),
             type: 'get',
             contentType: 'application/json',
@@ -38,7 +39,7 @@
             {
                 console.log(errorThrown);
             } 
-        });
+        });*/
     }
     function insert() 
     { 
